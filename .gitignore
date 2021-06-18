@@ -1,0 +1,14 @@
+#ignored directories
+/test/
+/database/
+/anime_env/
+/__pycache__/
+/AnimeWebsiteProject/__pycache__/
+
+#ignored files
+settingslocal.py
+
+#ignored formats
+*.db
+*.sln
+*.pyproj

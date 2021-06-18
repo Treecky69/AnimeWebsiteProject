@@ -1,0 +1,32 @@
+body{
+    background-color: lightblue;
+}
+table {
+    background-color: grey;
+    font-family: 'Times New Roman';
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#menu ul {
+	float: center;
+	background-color:white;
+	border: 2px solid black;
+	list-style-type: none;
+	margin: 10px;
+	padding: 10px;
+}
+
+#menu ul li {
+	display: inline;
+	font-size: 24px; 
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 0px;
+}
