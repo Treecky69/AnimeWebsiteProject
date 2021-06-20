@@ -1,6 +1,9 @@
 body{
     background-color: lightblue;
 }
+
+/* Font and colors of the table */
+
 table {
     background-color: grey;
     font-family: 'Times New Roman';
@@ -8,12 +11,19 @@ table {
     margin-right: auto;
 }
 
+/* Font and text placement in a single cell */
+
 td {
     text-align: center;
     vertical-align: middle;
     padding-left: 10px;
     padding-right: 10px;
 }
+
+/* Attributes of the menu on the top of every page */
+
+/* colors and padding */
+
 #menu ul {
 	float: center;
 	background-color:white;
@@ -22,6 +32,8 @@ td {
 	margin: 10px;
 	padding: 10px;
 }
+
+/* font and margin of every button */
 
 #menu ul li {
 	display: inline;

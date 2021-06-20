@@ -1,7 +1,3 @@
-"""
-The flask application package.
-"""
-
 from flask import Flask
 from flask import *
 #import AnimeWebsiteProject.views

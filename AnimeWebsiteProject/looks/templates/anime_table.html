@@ -1,6 +1,9 @@
 {% extends "base.html" %}
+
 {% block head %} <title>Anime Table</title> {% endblock %}
+
 {% block body %}
+
     <table border=1>
         <thead>
             <tr>
@@ -13,6 +16,7 @@
 
         <!--BEGGINING OF THE TABLE-->
         <tr>
+
         <!--declaring namespace-->
         {% set ns = namespace(genre_str = "") %}
 
@@ -25,19 +29,25 @@
             <!--previous index in the for loop-->
             {% set prev = rows[index-1] %}
 
-            <!--check if the previous ID is the same as the current one-->
+            <!--check if the previous anime name is the same as the current one-->
+            <!--If it is, checks if its the last loop of the for loop-->
+            <!--If its not the last loop, adds current genre name to the genre string-->
+            <!--If the names are different, then it prints out all the attributes(anime name, rating, number of episodes) -->
+            <!--along with the genre string that it has collected from the previous loops and resets it-->
                 {% if index != 0 and row.anime_name != prev.anime_name %}
                     <td>{{prev.anime_name}}</td>
                     <td>{{prev.numepisodes}}</td>
                     <td>{{prev.rating}}</td>
                     <td>{{ns.genre_str}}</td>
                     {% set ns.genre_str = row["anime_genre"] ~ " " %}
+
                 {% elif loop.last %}
                     {% set ns.genre_str = ns.genre_str ~ row.anime_genre %}
                     <td>{{row.anime_name}}</td>
                     <td>{{row.numepisodes}}</td>
                     <td>{{row.rating}}</td>
                     <td>{{ns.genre_str}}</td>
+                    
                 {% else %}
                     <!--genre string where the genres get added in a string -->
                     {% set ns.genre_str = ns.genre_str ~ row["anime_genre"] ~ " " %}
@@ -47,6 +57,8 @@
 
         {% endfor %}
         <!--END OF FOR LOOP-->
+
     </table>
     <!--END OF THE TABLE-->
+
 {% endblock %}
