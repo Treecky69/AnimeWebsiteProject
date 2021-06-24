@@ -6,8 +6,9 @@
     <body>
         <div id="menu">
             <ul>
-                <li><a href="{{url_for("home_view.index")}}">Home</a></li>
-                <li><a href="{{url_for("home_view.anime_list")}}">Anime Table</a></li>
+                <li><a href="{{url_for("user.index")}}">Home</a></li>
+                <li><a href="{{url_for("user.anime_list")}}">Anime Table</a></li>
+                <li><a href="{{url_for("admin.CRUD")}}">Admin</a></li>
             </ul>
         </div>
         {% block body %}{% endblock %}

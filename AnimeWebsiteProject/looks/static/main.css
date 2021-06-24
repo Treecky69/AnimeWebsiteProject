@@ -42,3 +42,17 @@ td {
 	margin-right: 100px;
 	margin-top: 0px;
 }
+
+/* link colors */
+
+a:link{
+	color: lightgreen;
+}
+
+a:visited{
+	color: yellow;
+}
+
+a:hover{
+	color: orange;
+}
