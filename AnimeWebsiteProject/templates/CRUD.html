@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block head %} <title>Admin changes</title> {% endblock %}
+{% block body %}
+
+    <!--link for creating a new entry-->    
+    <button style="background-color: black;"><a href="/admin/create">Create a new entry</a></button>
+    
+    <!--BEGGINING OF THE TABLE-->
+    <table border=1>
+
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Number of Episodes</td>
+                <td>Rating</td>
+                <td>Genres</td>
+                <td>Modify</td>
+            </tr>
+        </thead>
+
+        <tr>
+
+        <!--declaring namespace-->
+        {% set ns = namespace(genre_str = "") %}
+
+        <!--BEGGINING OF FOR LOOP-->
+        {% for row in rows %}
+
+            <!--index-->
+            {% set index = loop.index0 %}
+
+            {% set next = rows[index+1] %}
+        
+            <!--genre string where the genres get added in a string -->
+            {% set ns.genre_str = ns.genre_str ~ row["anime_genre"] ~ " " %}
+
+                <!--check if the previous anime name is the same as the current one-->
+                <!--If it is, checks if its the last loop of the for loop-->
+                <!--If its not the last loop, adds current genre name to the genre string-->
+                <!--If the names are different, then it prints out all the attributes(anime name, rating, number of episodes) -->
+                <!--along with the genre string that it has collected from the previous loops and resets it-->
+                {% if loop.last %}
+                    <td>{{row.ID}}</td>
+                    <td>{{row.anime_name}}</td>
+                    <td>{{row.numepisodes}}</td>
+                    <td>{{row.rating}}</td>
+                    <td>{{ns.genre_str}}</td>
+                    <td>
+                        <a href="">Update</a>
+                        <a href="">Delete</a>
+                    </td>
+                
+                {% elif row.anime_name != next.anime_name %}
+                    <td>{{row.ID}}</td>
+                    <td>{{row.anime_name}}</td>
+                    <td>{{row.numepisodes}}</td>
+                    <td>{{row.rating}}</td>
+                    <td>{{ns.genre_str}}</td>
+                    <td>
+                        <a href="">Update</a>
+                        <a href="">Delete</a>
+                    </td>
+                    {% set ns.genre_str = " " %}
+                    
+                {%endif%}
+
+        </tr>
+
+        {% endfor %}
+        <!--END OF FOR LOOP-->
+
+    </table>
+    <!--END OF THE TABLE-->
+
+{% endblock %}

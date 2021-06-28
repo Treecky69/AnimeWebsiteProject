@@ -1,30 +1,48 @@
-from flask import Flask, render_template, blueprints
-from AnimeWebsiteProject import app, home_view
+from flask import Flask, render_template, blueprints, request, redirect
+from AnimeWebsiteProject import app, user, admin
 import sqlite3
+from funcs import table_form, genre_list
 
 #home directory, main page where random anime genres will be displayed
 
-@home_view.route("/")
-@home_view.route("/home")
+@user.route("/")
+@user.route("/home")
 def index():
     return render_template("main_page.html")
 
 #Anime Table, showing all the anime in the database
 
-@home_view.route("/anime_list")
+@user.route("/anime_list")
 def anime_list():
-    con = sqlite3.connect("anime_mock.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    cur.execute("""select anime.name as anime_name, anime.numepisodes as numepisodes, anime.rating as rating, genres.genre as anime_genre from anime_genre
-    inner join anime on anime.ID = anime_genre.animeID inner join genres on genres.ID = anime_genre.genreID""")
-    rows = cur.fetchall()
-    return render_template("anime_table.html", rows = rows)
+    table_form()
+    return render_template("anime_table.html", rows = table_form())
 
+#admin page, for modifying the database
+
+@admin.route("/admin")
+def CRUD():
+    table_form()
+    return render_template("CRUD.html", rows = table_form())
+
+@admin.route("/admin/create")
+def create_entry():
+    return render_template("create.html", genres = genre_list())
+
+@admin.route("/create", methods = ["GET", "POST"])
+def create():
+    if request.method == "POST":
+        req = request.form
+        title = req["title"]
+        number_eps = req["numepisodes"]
+        rating = req["rating"]
+        genre = req.getlist("genres")
+        return str("%s, %s, %s, %s" % (title, number_eps, rating, genre))
+    return render_template("main_page.html")
 #Runnning the server
 
 if __name__ == "__main__":
-    app.register_blueprint(home_view) # register blueprint
-    app.config.from_pyfile("settingslocal.py") #config file
+    app.register_blueprint(user) # register blueprint
+    app.register_blueprint(admin) # register blueprint
+    #app.config.from_pyfile("settingslocal.py") #config file
     #app.config["EXPLAIN_TEMPLATE_LOADING"] = True #debug in the command line, tells you where it searches for the templates and static files
-    app.run(debug = True, port = 6969)
+    app.run(debug = False, port = 6969, use_reloader=False)
