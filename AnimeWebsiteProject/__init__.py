@@ -3,4 +3,4 @@ from flask import *
 #import AnimeWebsiteProject.views
 app = Flask(__name__)
 user = Blueprint("user", __name__)
-admin = Blueprint("admin", __name__)
+admin = Blueprint("admin", __name__, template_folder=".\\templates\\admin")
