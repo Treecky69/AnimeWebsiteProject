@@ -1,7 +1,7 @@
 from flask import Flask, render_template, blueprints, request, redirect
 from AnimeWebsiteProject import app, user, admin
 import sqlite3
-from funcs import table_form, genre_list, Database_entry
+from funcs import table_form, genre_list, Database_entry, update_db, id_entry
 
 #home directory, main page where random anime genres will be displayed
 
@@ -30,7 +30,7 @@ def CRUD():
 def create_entry():
     return render_template("create.html", genres = genre_list())
 
-#Where the request is made and the title is inserted in the database
+#The logic for the new entry
 
 @admin.route("/create", methods = ["GET", "POST"])
 def create():
@@ -39,6 +39,21 @@ def create():
         entries = Database_entry(req["title"], req["numepisodes"], req["rating"], req.getlist("genres"))
         return str("%s" % (entries.Main_data()))
     return render_template("admin.html")
+
+#The html shown when updating info about an anime
+
+@admin.route("/admin/update")
+def update_html():
+    args = request.args
+    return render_template("update.html", rows = id_entry(args["id"]), genres = genre_list())
+
+#The logic behind the update function
+
+@admin.route("/update", methods = ["POST"])
+def update():
+    args = request.args
+    forms = request.form
+    return update_db(args["id"], forms["db-attribs"], forms["query"], forms.getlist("genres"))
 
 #Runnning the server
 
