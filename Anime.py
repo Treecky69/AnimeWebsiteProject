@@ -35,7 +35,7 @@ def create():
 
         #if a title is already in the database
         if check:
-            return "This is already in the database"
+            return redirect("/failure")
 
         return redirect("/endpoint")
 
@@ -53,7 +53,9 @@ def update():
     if request.method == "POST":
         args = request.args
         forms = request.form
-        update_db(args["id"], forms["db-attribs"], forms["query"], forms.getlist("genres"))
+        error = update_db(args["id"], forms["db-attribs"], forms["query"], forms.getlist("genres"))
+        if error:
+            return redirect("/failure")
         return redirect("/endpoint")
 
 #html and logic for deleting an entry in the database
@@ -63,6 +65,7 @@ def delete():
     if request.method == "GET":
         args=request.args
         return render_template("delete.html", rows = id_entry(args["id"]))
+
     if request.method == "POST":
         args = request.args
         delete_entry(args["id"])
@@ -78,7 +81,7 @@ def genre():
         #if a title is already in the database
         check = new_genre(req["genre"])
         if check:
-            return "This is already in the database"
+            return redirect("/failure")
 
         return redirect("/endpoint")
 
@@ -90,6 +93,10 @@ def genre():
 @admin.route("/endpoint")
 def endpoint():
     return render_template("endpoint.html")
+
+@admin.route("/failure")
+def failure():
+    return render_template("failure.html")
 
 #Runnning the server
 

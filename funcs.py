@@ -1,6 +1,6 @@
 import sqlite3
 
-#function to fetch the info for the table for the user side
+#FUNCTION TO FETCH INFO FOR THE TABLE IN THE USER SIDE
 
 def table_form():
     con = sqlite3.connect("anime_mock.db")
@@ -25,7 +25,7 @@ def id_entry(id):
     rows = cur.fetchall()
     return rows
 
-#function for displaying the genres
+#FUNCTION FOR DISPLAYING GENRES
 
 def genre_list():
     con = sqlite3.connect("anime_mock.db")
@@ -35,7 +35,7 @@ def genre_list():
     rows = cur.fetchall()
     return rows
 
-#class for the form request and database entry
+#CLASS FOR THE NEW DATABASE ENTRY
 
 class Database_entry:
     def __init__(self, title, NumEpisodes, rating, genres):
@@ -77,37 +77,53 @@ class Database_entry:
         con.commit()
         return check
 
-#function for updating anime info
+#FUNCTION FOR UPDATING ANIME INFO
 
 def update_db(id, attrib, query, genres):
+    #if there is an error, then its true
+    error = False
+
     con = sqlite3.connect("anime_mock.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
-#delete all the exsiting genre IDs associated with the anime ID in the anime_genre database
-#then inserts the new ones
+    #check if the string is empty or has nothing but whitespaces
+    string_check = not query or query.isspace()
 
-    if attrib == "genres":
-        cur.execute("delete from anime_genre where animeid = :id", {"id": id})
-        for genre in genres:
-            cur.execute("insert into anime_genre(animeID, genreID) values(:anime_ID, :genre_ID)", {"anime_ID": int(id), "genre_ID": int(genre)})
+    if attrib == "genres" and len(genres) == 0:
+        error = True
 
-#updates the name
-    elif attrib == "name":
-        query = query.title()
-        cur.execute("update anime set name = :query where id == :id", {"id": id, "query": query})
+    elif attrib != "genres" and string_check:
+        error = True
 
-#updates the number of episodes
-    elif attrib == "numepisodes":
-        cur.execute("update anime set numepisodes = :query where id == :id", {"id": id, "query": query})
+    else:
+        #delete all the exsiting genre IDs associated with the anime ID in the anime_genre database
+        #then inserts the new ones
+        if attrib == "genres":
+            cur.execute("delete from anime_genre where animeid = :id", {"id": id})
+            for genre in genres:
+                cur.execute("insert into anime_genre(animeID, genreID) values(:anime_ID, :genre_ID)", {"anime_ID": int(id), "genre_ID": int(genre)})
 
-#updates the rating
-    elif attrib == "rating":
-        cur.execute("update anime set rating = :query where id == :id", {"id": id, "query": query})
+        #updates the name
+        elif attrib == "name":
 
-    con.commit()
+            query = query.title()
+            cur.execute("update anime set name = :query where id == :id", {"id": id, "query": query})
 
-#delete entry
+        #updates the number of episodes
+        elif attrib == "numepisodes":
+            cur.execute("update anime set numepisodes = :query where id == :id", {"id": id, "query": query})
+
+        #updates the rating
+        elif attrib == "rating":
+            cur.execute("update anime set rating = :query where id == :id", {"id": id, "query": query})
+
+    if error == False:
+        con.commit()
+
+    return error
+
+#FUNCTION FOR DELETING AN ENTRY
 
 def delete_entry(id):
     con = sqlite3.connect("anime_mock.db")
@@ -120,7 +136,7 @@ def delete_entry(id):
 
     con.commit()
 
-#function for entering new genres
+#FUNCTION FOR ENTERING A NEW GENRE
 
 def new_genre(name):
     #boolean variable that only becomes true when the inserted title from the form is already in the database
