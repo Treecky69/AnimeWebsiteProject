@@ -5,6 +5,7 @@
 
     <!--link for creating a new entry-->    
     <button style="background-color: black;"><a href="/admin/create">Create a new entry</a></button>
+    <button style="background-color: black;"><a href="/admin/new_genre">Add a new genre</a></button>
     
     <!--BEGGINING OF THE TABLE-->
     <table border=1>
@@ -49,7 +50,7 @@
                     <td>{{ns.genre_str}}</td>
                     <td>
                         <a href="/admin/update?id={{row.ID}}">Update</a>
-                        <a href="">Delete</a>
+                        <a href="/admin/delete?id={{row.ID}}">Delete</a>
                     </td>
                 
                 {% elif row.anime_name != next.anime_name %}
@@ -60,7 +61,7 @@
                     <td>{{ns.genre_str}}</td>
                     <td>
                         <a href="/admin/update?id={{row.ID}}">Update</a>
-                        <a href="">Delete</a>
+                        <a href="/admin/delete?id={{row.ID}}">Delete</a>
                     </td>
                     {% set ns.genre_str = " " %}
                     

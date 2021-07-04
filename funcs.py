@@ -45,6 +45,9 @@ class Database_entry:
         self.genres = genres
 
     def Main_data(self):
+        #boolean variable that only becomes true when the inserted title from the form is already in the database
+        check = False
+
         con = sqlite3.connect("anime_mock.db")
         con.row_factory = sqlite3.Row
         #con = sqlite3.connect("anime_mock - Copy.db")
@@ -56,8 +59,8 @@ class Database_entry:
         self.title = self.title.title()
         for row in rows:
             if self.title in row["name"]:
-                message = "This anime is already in the database"
-                return message
+                check = True
+                return check
 
         #inserting the title, number of episodes and rating in the anime table
         cur.execute("insert into anime(name, NumEpisodes, rating) values(:name, :episodes, :rating)", {"name": self.title, "episodes": self.episodes, "rating": self.rating})
@@ -72,8 +75,7 @@ class Database_entry:
             cur.execute("insert into anime_genre(animeID, genreID) values(:anime_ID, :genre_ID)", {"anime_ID": int(anime_ID), "genre_ID": int(genre)})  
 
         con.commit()
-        message = "Change commited to the database"
-        return message
+        return check
 
 #function for updating anime info
 
@@ -104,4 +106,39 @@ def update_db(id, attrib, query, genres):
         cur.execute("update anime set rating = :query where id == :id", {"id": id, "query": query})
 
     con.commit()
-    return "update commited"
+
+#delete entry
+
+def delete_entry(id):
+    con = sqlite3.connect("anime_mock.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+
+    #deleting the title and genres that it was connected to using the id
+    cur.execute("delete from anime where ID == :id", {"id": id})
+    cur.execute("delete from anime_genre where animeID == :id", {"id": id})
+
+    con.commit()
+
+#function for entering new genres
+
+def new_genre(name):
+    #boolean variable that only becomes true when the inserted title from the form is already in the database
+    check = False
+
+    con = sqlite3.connect("anime_mock.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("select genre from genres")
+    rows = cur.fetchall()
+
+    #capitalizing the first letter of each word in the anime title and comparing with existing titles
+    name = name.title()
+    for row in rows:
+        if name in row:
+            check = True
+            break
+
+    cur.execute("insert into genres(genre) values(:name)", {"name": name})
+    con.commit()
+    return check

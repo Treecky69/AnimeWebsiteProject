@@ -8,7 +8,6 @@
 
             <thead>
                 <tr>
-                    <td>ID</td>
                     <td>Name</td>
                     <td>Number of Episodes</td>
                     <td>Rating</td>
@@ -29,10 +28,9 @@
             
                 <!--genre string where the genres get added in a string -->
                 {% set ns.genre_str = ns.genre_str ~ row["anime_genre"] ~ " " %}
-    
-                    <!--where results are printed out-->
+
+                    <!--last loop where results are printed-->
                     {% if loop.last %}
-                        <td>{{row.ID}}</td>
                         <td>{{row.anime_name}}</td>
                         <td>{{row.numepisodes}}</td>
                         <td>{{row.rating}}</td>
@@ -46,29 +44,11 @@
     
         </table>
         <!--END OF THE TABLE-->
-        
-        <form style="align-self: center;" action="/admin/update?id={{rows.0.id}}" method="POST">
-            <select name="db-attribs">
-                <option value="name">Title</option>
-                <option value="numepisodes">Number of Episodes</option>
-                <option value="rating">Rating</option>
-                <option value="genres">Genres</option>
-            </select><br>
 
-            <label>Insert the new entry for the database, ignore if genres selected</label><br>
-            <input type="text" id="query" name="query">
-            <button type="submit">Submit</button><br>
-
-            <!--List of genres to choose from-->
-            <label>Genres</label><br>
-            <select name="genres" multiple>
-                {% for genre in genres %}
-                    <option value="{{genre.id}}">{{genre.genre}}</option>
-                {% endfor %}
-            </select> <br>
-        <p>Hold CTRL+Left Click to select multiple elements</p>
-
-        <button type="submit">Submit changes</button>
+        <h1>Are you sure you want to delete this entry?</h1>
+        <form action="/admin/delete?id={{rows.0.id}}" method="POST">
+            <button type="submit">Yes</button>
         </form>
+        <button type="button" onclick="location.href='/admin'">No</button>
     </body>
 </html>

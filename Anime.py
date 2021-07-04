@@ -1,7 +1,7 @@
 from flask import Flask, render_template, blueprints, request, redirect
 from AnimeWebsiteProject import app, user, admin
 import sqlite3
-from funcs import table_form, genre_list, Database_entry, update_db, id_entry
+from funcs import table_form, genre_list, Database_entry, update_db, id_entry, delete_entry, new_genre
 
 #home directory, main page where random anime genres will be displayed
 
@@ -24,36 +24,72 @@ def CRUD():
     table_form()
     return render_template("admin.html", rows = table_form())
 
-#The html for inserting info about a new entry
+#The html and logic for the new entry
 
-@admin.route("/admin/create")
-def create_entry():
-    return render_template("create.html", genres = genre_list())
-
-#The logic for the new entry
-
-@admin.route("/create", methods = ["GET", "POST"])
+@admin.route("/admin/create", methods = ["GET", "POST"])
 def create():
     if request.method == "POST":
         req = request.form
         entries = Database_entry(req["title"], req["numepisodes"], req["rating"], req.getlist("genres"))
-        return str("%s" % (entries.Main_data()))
-    return render_template("admin.html")
+        check = entries.Main_data()
 
-#The html shown when updating info about an anime
+        #if a title is already in the database
+        if check:
+            return "This is already in the database"
 
-@admin.route("/admin/update")
-def update_html():
-    args = request.args
-    return render_template("update.html", rows = id_entry(args["id"]), genres = genre_list())
+        return redirect("/endpoint")
 
-#The logic behind the update function
+    if request.method == "GET":
+        return render_template("create.html", genres = genre_list())
 
-@admin.route("/update", methods = ["POST"])
+#The html and logic when updating info about an anime
+
+@admin.route("/admin/update", methods = ["GET", "POST"])
 def update():
-    args = request.args
-    forms = request.form
-    return update_db(args["id"], forms["db-attribs"], forms["query"], forms.getlist("genres"))
+    if request.method == "GET":
+        args = request.args
+        return render_template("update.html", rows = id_entry(args["id"]), genres = genre_list())
+
+    if request.method == "POST":
+        args = request.args
+        forms = request.form
+        update_db(args["id"], forms["db-attribs"], forms["query"], forms.getlist("genres"))
+        return redirect("/endpoint")
+
+#html and logic for deleting an entry in the database
+
+@admin.route("/admin/delete", methods = ["GET", "POST"])
+def delete():
+    if request.method == "GET":
+        args=request.args
+        return render_template("delete.html", rows = id_entry(args["id"]))
+    if request.method == "POST":
+        args = request.args
+        delete_entry(args["id"])
+        return redirect("/endpoint")
+
+#html and logic for adding a new genre to the genres table in the database
+
+@admin.route("/admin/new_genre", methods=["GET", "POST"])
+def genre():
+    if request.method == "POST":
+        req = request.form
+
+        #if a title is already in the database
+        check = new_genre(req["genre"])
+        if check:
+            return "This is already in the database"
+
+        return redirect("/endpoint")
+
+    if request.method == "GET":
+        return render_template("create_genre.html")
+
+#endpoint for when a change is made
+
+@admin.route("/endpoint")
+def endpoint():
+    return render_template("endpoint.html")
 
 #Runnning the server
 
