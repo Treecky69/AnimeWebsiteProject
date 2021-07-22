@@ -1,27 +1,25 @@
 from flask import Flask, render_template, blueprints, request, redirect
 from AnimeWebsiteProject import app, user, admin
 import sqlite3
-from funcs import table_form, genre_list, Database_entry, update_db, id_entry, delete_entry, new_genre
+from funcs import table_form, genre_list, Database_entry, update_db, id_entry, delete_entry, new_genre, random_id, random_num
 
 #home directory, main page where random anime genres will be displayed
 
 @user.route("/")
 @user.route("/home")
 def index():
-    return render_template("main_page.html")
+    return render_template("main_page.html", rows = random_id(random_num()))
 
 #Anime Table, showing all the anime in the database
 
 @user.route("/anime_list")
 def anime_list():
-    table_form()
     return render_template("anime_table.html", rows = table_form())
 
 #Admin page, for modifying the database
 
 @admin.route("/admin")
 def CRUD():
-    table_form()
     return render_template("admin.html", rows = table_form())
 
 #The html and logic for the new entry

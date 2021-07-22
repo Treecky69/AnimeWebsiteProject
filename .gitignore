@@ -5,13 +5,14 @@
 /__pycache__/
 /AnimeWebsiteProject/__pycache__/
 /.vscode/
+/static/images/
 
 #ignored files
 settingslocal.py
-anime_mock.db-journal
-anime_mock - Copy.db-journal
+test_file.py
 
 #ignored formats
 *.db
 *.sln
 *.pyproj
+*.db-journal
