@@ -1,10 +1,13 @@
 import sqlite3
 import random
 
+#database variable
+database = "./data/anime_mock.db"
+
 #FUNCTION TO FETCH INFO FOR THE TABLE IN THE USER SIDE
 
 def table_form():
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -16,7 +19,7 @@ def table_form():
     return rows
 
 def id_entry(id):
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -31,7 +34,7 @@ def id_entry(id):
 #FUNCTION FOR DISPLAYING GENRES
 
 def genre_list():
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -54,7 +57,7 @@ class Database_entry:
         #boolean variable that only becomes true when the inserted title from the form is already in the database
         check = False
 
-        con = sqlite3.connect("anime_mock.db")
+        con = sqlite3.connect(database)
         con.row_factory = sqlite3.Row
         cur = con.cursor()
 
@@ -90,7 +93,7 @@ def update_db(id, attrib, query, genres):
     #if there is an error, then its true
     error = False
 
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -134,7 +137,7 @@ def update_db(id, attrib, query, genres):
 #FUNCTION FOR DELETING AN ENTRY
 
 def delete_entry(id):
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -150,7 +153,7 @@ def new_genre(name):
     #boolean variable that only becomes true when the inserted title from the form is already in the database
     check = False
 
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -173,7 +176,7 @@ def new_genre(name):
 
 #FUNCTION THAT PICKS A RANDOM NUMBER IN THE RANGE BETWEEN ONE AND THE NUMBER OF GENRES IN THE DATABASE
 def random_num():
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
@@ -188,7 +191,7 @@ def random_num():
 #FUNCTION THAT SELECTS THE ANIME FOR THE MAIN PAGE FOR THE RANDOM GENRE
 #ID IS THE RANDOM NUMBER FROM THE random_num() FUNCTION
 def random_id(id):
-    con = sqlite3.connect("anime_mock.db")
+    con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
