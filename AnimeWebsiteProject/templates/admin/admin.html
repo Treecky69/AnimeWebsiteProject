@@ -4,11 +4,11 @@
 {% block body %}
 
     <!--link for creating a new entry-->    
-    <button style="background-color: black;"><a href="/admin/create">Create a new entry</a></button>
-    <button style="background-color: black;"><a href="/admin/new_genre">Add a new genre</a></button>
+    <button style="background-color: black;" class="btn btn-success"><a href="/admin/create">Create a new entry</a></button>
+    <button style="background-color: black;" class="btn btn-success"><a href="/admin/new_genre">Add a new genre</a></button>
     
     <!--BEGGINING OF THE TABLE-->
-    <table border=1>
+    <table border=1 class="table table-hover">
 
         <thead>
             <tr>
@@ -49,8 +49,8 @@
                     <td>{{row.rating}}</td>
                     <td>{{ns.genre_str}}</td>
                     <td>
-                        <a href="/admin/update?id={{row.ID}}">Update</a>
-                        <a href="/admin/delete?id={{row.ID}}">Delete</a>
+                        <a href="/admin/update?id={{row.ID}}" class="btn btn-success">Update</a>
+                        <a href="/admin/delete?id={{row.ID}}" class="btn btn-success">Delete</a>
                     </td>
                 
                 {% elif row.anime_name != next.anime_name %}
@@ -60,8 +60,8 @@
                     <td>{{row.rating}}</td>
                     <td>{{ns.genre_str}}</td>
                     <td>
-                        <a href="/admin/update?id={{row.ID}}">Update</a>
-                        <a href="/admin/delete?id={{row.ID}}">Delete</a>
+                        <a href="/admin/update?id={{row.ID}}" class="btn btn-success">Update</a>
+                        <a href="/admin/delete?id={{row.ID}}" class="btn btn-success">Delete</a>
                     </td>
                     {% set ns.genre_str = " " %}
                     
