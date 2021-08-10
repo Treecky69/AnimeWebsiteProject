@@ -1,12 +1,13 @@
 body{
-    background-color: lightblue;
+    background-color: rgb(66, 78, 82);
 }
 
 /* Font and colors of the table */
 
 table {
-    background-color: grey;
-    font-family: 'Times New Roman';
+    background-color: rgb(56, 172, 180);
+    font-family: 'Times New Roman', sans-serif;
+	font-weight: bold;
     margin-left: auto;
     margin-right: auto;
 }
@@ -26,7 +27,7 @@ td {
 
 #menu ul {
 	float: center;
-	background-color:white;
+	background-color:black;
 	list-style-type: none;
 	margin: 10px;
 	padding: 10px;
@@ -45,13 +46,21 @@ td {
 /* link colors */
 
 a:link{
-	color: blue;
+	color: rgb(62, 170, 147);
 }
 
 a:visited{
-	color: yellow;
+	color: rgb(212, 212, 78);
 }
 
 a:hover{
-	color: orange;
+	color: red;
+}
+
+.btn, .btn-success{
+	background-color: rgb(26, 51, 161);
+}
+
+td:hover{
+	background-color: rgba(101, 44, 192, 0.363);
 }
