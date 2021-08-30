@@ -184,8 +184,12 @@ def random_num():
     cur.execute("select max(id) from genres")
     rows = cur.fetchone()
 
+    #we add 1 to the number because of the way the randrange function works
+    #and this is stored in a separate variable for more readability i guess
+    range_limit = rows[0] + 1
+
     #chooses a number between 1 and the number fetched from the database
-    id = random.randrange(1, rows[0])
+    id = random.randrange(1, range_limit)
     return id
 
 #FUNCTION THAT SELECTS THE ANIME FOR THE MAIN PAGE FOR THE RANDOM GENRE
