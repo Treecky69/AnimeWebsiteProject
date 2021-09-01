@@ -6,11 +6,11 @@
 /AnimeWebsiteProject/__pycache__/
 /.vscode/
 /static/images/
+/mysite/.vscode/
 
 #ignored files
 settingslocal.py
 test_file.py
-launch.json
 
 #ignored formats
 *.db
