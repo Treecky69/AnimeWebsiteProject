@@ -96,7 +96,7 @@ def endpoint():
 def failure():
     return render_template("failure.html")
 
-#Runnning the server
+#Runnning the development server
 
 if __name__ == "__main__":
     app.register_blueprint(user) # register blueprint
