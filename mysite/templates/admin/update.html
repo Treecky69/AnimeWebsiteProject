@@ -1,0 +1,74 @@
+<html>
+    <body>
+        <table style="background-color: grey;
+        border: 1px solid black;
+        margin-left: auto;
+        margin-right: auto;"
+        border=1>
+
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Number of Episodes</td>
+                    <td>Rating</td>
+                    <td>Genres</td>
+                </tr>
+            </thead>
+    
+            <tr>
+    
+            <!--declaring namespace-->
+            {% set ns = namespace(genre_str = "") %}
+    
+            <!--BEGGINING OF FOR LOOP-->
+            {% for row in rows %}
+    
+                <!--index-->
+                {% set index = loop.index0 %}
+            
+                <!--genre string where the genres get added in a string -->
+                {% set ns.genre_str = ns.genre_str ~ row["anime_genre"] ~ " " %}
+    
+                    <!--where results are printed out-->
+                    {% if loop.last %}
+                        <td>{{row.ID}}</td>
+                        <td>{{row.anime_name}}</td>
+                        <td>{{row.numepisodes}}</td>
+                        <td>{{row.rating}}</td>
+                        <td>{{ns.genre_str}}</td>
+                    {%endif%}
+    
+            </tr>
+    
+            {% endfor %}
+            <!--END OF FOR LOOP-->
+    
+        </table>
+        <!--END OF THE TABLE-->
+        
+        <form style="align-self: center;" action="/admin/update?id={{rows.0.id}}" method="POST">
+            <select name="db-attribs">
+                <option value="name">Title</option>
+                <option value="numepisodes">Number of Episodes</option>
+                <option value="rating">Rating</option>
+                <option value="genres">Genres</option>
+            </select><br>
+
+            <label>Insert the new entry for the database, ignore if genres selected</label><br>
+            <input type="text" id="query" name="query">
+            <button type="submit">Submit</button><br>
+
+            <!--List of genres to choose from-->
+            <label>Genres</label><br>
+            <select name="genres" multiple>
+                {% for genre in genres %}
+                    <option value="{{genre.id}}">{{genre.genre}}</option>
+                {% endfor %}
+            </select> <br>
+        <p>Hold CTRL+Left Click to select multiple elements</p>
+
+        <button type="submit">Submit changes</button>
+        </form>
+    </body>
+</html>

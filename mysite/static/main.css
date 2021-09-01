@@ -1,0 +1,66 @@
+body{
+    background-color: rgb(66, 78, 82);
+}
+
+/* Font and colors of the table */
+
+table {
+    background-color: rgb(56, 172, 180);
+    font-family: 'Times New Roman', sans-serif;
+	font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Font and text placement in a single cell */
+
+td {
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Attributes of the menu on the top of every page */
+
+/* colors and padding */
+
+#menu ul {
+	float: center;
+	background-color:black;
+	list-style-type: none;
+	margin: 10px;
+	padding: 10px;
+}
+
+/* font and margin of every button */
+
+#menu ul li {
+	display: inline;
+	font-size: 24px; 
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 0px;
+}
+
+/* link colors */
+
+a:link{
+	color: rgb(62, 170, 147);
+}
+
+a:visited{
+	color: rgb(212, 212, 78);
+}
+
+a:hover{
+	color: red;
+}
+
+.btn, .btn-success{
+	background-color: rgb(26, 51, 161);
+}
+
+td:hover{
+	background-color: rgba(101, 44, 192, 0.363);
+}

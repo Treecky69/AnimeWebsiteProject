@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Add a new anime to the database</title>
+    </head>
+    <body>
+        <form action="/admin/create" method="POST">
+
+        <!--Title-->
+        <label>Title</label><br>
+        <input type="text" id="title" name="title" placeholder="Title" required="required"><br>
+
+        <!--Number of Episodes-->
+        <label>Number of Episodes</label><br>
+        <input type="number" id="numepisodes" name="numepisodes" placeholder="Number of Episodes"><br>
+
+        <!--Rating-->
+        <label>Rating</label><br>
+        <input type="text" id="rating" name="rating" placeholder="Rating"><br>
+
+        <!--List of genres to choose from-->
+        <label>Genres</label><br>
+        <select name="genres" multiple>
+            {% for genre in genres %}
+                <option value="{{genre.id}}">{{genre.genre}}</option>
+            {% endfor %}
+        </select> <br>
+        <p>Hold CTRL+Left Click to select multiple elements</p>
+
+        <button type="submit">Submit changes</button>
+
+        </form>
+    </body>
+</html>

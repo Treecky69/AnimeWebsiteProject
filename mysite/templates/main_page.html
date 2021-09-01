@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %} <title>Home Page</title> {% endblock %}
+{% block body %}
+
+<h1 style="text-align: center;">Anime with the tag: {{rows.0.anime_genre}}</h1>
+<table border=1 class="table table-hover">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Number of Episodes</td>
+            <td>Rating</td>
+        </tr>
+    </thead>
+
+    <!--BEGGINING OF THE TABLE-->
+    <tr>
+
+    <!--declaring namespace-->
+    {% set ns = namespace(genre_str = "") %}
+
+    <!--BEGGINING OF FOR LOOP-->
+    {% for row in rows %}
+    
+        <!--index-->
+        {% set index = loop.index0 %}
+
+        <!--next index in the for loop-->
+        {% set next = rows[index+1] %}
+
+            <!--checks if its the last loop of the for loop so we don't get the "loop out of range" error-->
+            {% if loop.last %}
+                <td>{{row.anime_name}}</td>
+                <td>{{row.numepisodes}}</td>
+                <td>{{row.rating}}</td>
+        
+            <!--Check if the next anime name isn't the same as the current one-->
+            <!--If its not the same title, it prints out all the attributes(anime name, rating, number of episodes)-->
+            {% elif row.anime_name != next.anime_name %}
+                <td>{{row.anime_name}}</td>
+                <td>{{row.numepisodes}}</td>
+                <td>{{row.rating}}</td>
+                
+            {%endif%}
+
+    </tr>
+
+    {% endfor %}
+    <!--END OF FOR LOOP-->
+
+</table>
+<!--END OF THE TABLE-->
+
+{% endblock %}
